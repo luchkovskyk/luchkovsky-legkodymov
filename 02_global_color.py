@@ -63,27 +63,32 @@ print('Возможные цвета:')
 for num, name in colors.items():
     print('    ', num, ':', name[0].lower())
 
-# TODO необходимо отделить проверку корректности ввода от кода выполняющего
-#  отрисовку
+
+def draw():
+    point = sd.get_point(400, 400)
+    draw_triangle(start_point=point, angle=20, length=100, color=colors[color][1])
+
+    point = sd.get_point(100, 400)
+    draw_square(start_point=point, angle=20, length=100, color=colors[color][1])
+
+    point = sd.get_point(100, 100)
+    draw_pentagon(start_point=point, angle=20, length=100, color=colors[color][1])
+
+    point = sd.get_point(400, 100)
+    draw_hexagon(start_point=point, angle=20, length=100, color=colors[color][1])
+
+
 while True:
     color = input('Укажите номер цвета: ')
     if color.isdigit():
         color = int(color)
         if color in colors:
-            point = sd.get_point(400, 400)
-            draw_triangle(start_point=point, angle=20, length=100, color=colors[color][1])
-
-            point = sd.get_point(100, 400)
-            draw_square(start_point=point, angle=20, length=100, color=colors[color][1])
-
-            point = sd.get_point(100, 100)
-            draw_pentagon(start_point=point, angle=20, length=100, color=colors[color][1])
-
-            point = sd.get_point(400, 100)
-            draw_hexagon(start_point=point, angle=20, length=100, color=colors[color][1])
-            break
+            draw()
         else:
             print('Ошибка!: Неверно указан номер цвета.')
     else:
         print('Ошибка!: Указана буква.')
+    break
+    # TODO Отлично справились с заданием! Только вот этот break лишний, если его убрать то у пользователя появится
+    #  возможность исправить ошибку
 sd.pause()
