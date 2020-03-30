@@ -58,9 +58,26 @@ figures = {1: 'треугольник',
            2: 'квадрат',
            3: 'пятиугольник',
            4: 'шестиугольник'}
+# TODO Вместо словаря примените список словарей:
+figures = [
+    {'name': 'Треугольник', 'code': draw_triangle},
+    {'name': 'Квадрат', 'code': draw_square},
+    ...
+]
 
-# TODO необходимо отделить проверку корректности ввода от кода выполняющего
-#  отрисовку
+
+def draw():
+    point = sd.get_point(270, 270)
+    if figure == 1:
+        draw_triangle(start_point=point, angle=20, length=100, color=colors[color][1])
+    elif figure == 2:
+        draw_square(start_point=point, angle=20, length=100, color=colors[color][1])
+    elif figure == 3:
+        draw_pentagon(start_point=point, angle=20, length=100, color=colors[color][1])
+    elif figure == 4:
+        draw_hexagon(start_point=point, angle=20, length=100, color=colors[color][1])
+
+
 while True:
 
     print('Возможные фигуры:')
@@ -79,22 +96,13 @@ while True:
         color = input('Укажите номер цвета: ')
 
         if color.isdigit() and int(color) in colors:
-
             color = int(color)
-            point = sd.get_point(270, 270)
-            if figure == 1:
-                draw_triangle(start_point=point, angle=20, length=100, color=colors[color][1])
-            elif figure == 2:
-                draw_square(start_point=point, angle=20, length=100, color=colors[color][1])
-            elif figure == 3:
-                draw_pentagon(start_point=point, angle=20, length=100, color=colors[color][1])
-            elif figure == 4:
-                draw_hexagon(start_point=point, angle=20, length=100, color=colors[color][1])
-
-            break
+            draw()
         else:
             print('\n    Ошибка!: Неверно указан номер фигуры.\n')
     else:
         print('\n    Ошибка!: Неверно указан номер фигуры.\n')
+    break  # TODO Тоже лишний, и лучше каждое меню в отдельном цикле, чтобы не заставлять в случае ошибки в номере
+           #  цвета заново вводить и фигуру
 
 sd.pause()
