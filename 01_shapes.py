@@ -29,25 +29,23 @@ import simple_draw as sd
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
 
 def draw_figure(start_point, side_count, angle, length):
-    vector = start_point
+    default_start = start_point  # TODO назовите её "текущая_точка" вместо "точка_по_умолчанию"
+    vector = start_point  # TODO Это излишне, чуть ниже присваивается другое значение, а это не используется
     angle_step = 360 / side_count
-    step = angle_step
-    for side in range(side_count):
-        # TODO От условий в цикле нужно избавиться
-        if side == 0:
-            # TODO Данную строку нужно вынести из цикла, она выполняется
-            #  ровно 1 раз, в цикле она совсем не нужна
-            vector = sd.get_vector(start_point=vector, angle=angle, length=length)
-        elif side == side_count - 1:
-            # TODO Необходимо немного подправить цикл range(side_count - 1),
-            #  тогда можно будет просто расположить данный код сразу после
-            #  цикла
-            sd.line(vector.end_point, start_point)
-            break
-        else:
-            vector = sd.get_vector(start_point=vector.end_point, angle=angle + step, length=length)
-            step += angle_step
-        vector.draw()
+    step = angle_step  # TODO Постарайтесь обойтись без этой переменной
+
+    # vector = sd.get_vector(start_point=vector, angle=angle, length=length)  # TODO Эти две строки не нужны, убираем
+    # sd.line(vector.end_point, vector.start_point)
+
+    for side in range(side_count - 2):
+        vector = sd.get_vector(start_point=vector.end_point, angle=angle, length=length)
+        # TODO 1) Используйте sd.vector вместо sd.get_vector, эта функция возвращается конечную точку
+        #  2) вместо переменной vector используйте переменную "текущую_точку"
+
+        step += angle_step
+        sd.line(vector.end_point, vector.start_point)  # TODO убираем
+
+    sd.line(vector.end_point, default_start)  # TODO и тут вместо vector.end_point - "текущая_точка"
 
 
 def draw_triangle(start_point, angle=0, length=100):
